@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app = "myChats">
+  <head>
+    <meta charset="utf-8">
+    <title>Chat With Friends</title>
+  </head>
+  <body ng-controller = "mainCtrl">
+    {{test}}
+
+    <form ng-submit="addChat(newChat)">
+      <input type="text" placeholder="Say the things" ng-model="newChat.message">
+      <button type="submit"> sayStuff </button>
+
+    </form>
+    <button ng-click ="deleteChats()"> Armeggeddon </button>
+    <div ng-repeat = "chat in chats"> {{chat.message}}</div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular.js" charset="utf-8"></script>
+    <script src="js/app.js" charset="utf-8"></script>
+    <script src="js/mainCtrl.js" charset="utf-8"></script>
+    <script src="js/mainSrvc.js" charset="utf-8"></script>
+  </body>
+</html>

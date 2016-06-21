@@ -4,15 +4,82 @@
     <meta charset="utf-8">
     <title>Worth It!</title>
   </head>
-  <body ng-controller = "chatCtrl">
+  <body ng-controller = "challengeCtrl">
     <strong>Worth it!</strong>
-    <form ng-submit = "addChats(message)">
-      <input type="text" name="name" ng-model = "message"><button type="button" name="button" ng-click = "addChats(message)">Chatz!</button>
-      <button type="button" name="button" ng-click = "clearChats()">Bye Bye Chats`</button>
-    </form>
-    <div ng-repeat =  "message in messages |orderBy:$index:false">{{message.message}}
-    </div>
+    <style>
+      input[type='number']{
+        width:30px;
+      }
+      input[type ='text']{
+        width:50%;
+      }
+      .fixed{
+        position:fixed;
+        top:10px;
+        right:10px;
+      }
+      .sub{
+        padding-left: 20px;
+        border-left: 2px solid black;
+      }
+    </style>
 
+    <!-- <div ng-repeat =  "challenge in challenges |orderBy:$index:false">
+      {{challenge.name}}
+    </div> -->
+    <button class = "fixed" ng-click = "save()">Save</button>
+    <div ng-repeat = "(superBlockName, superBlock) in grouped" >
+      <h1>
+        <input type="text" ng-model ="superBlockName"
+        ng-change="setAllSuperBlockName(superBlockName, superBlock, 'superBlock')">
+        <input type="number" ng-model = "superBlockOrder" placeholder = "{{getSuperBlockOrder(superBlock)}}"
+        ng-change="setAllSuperBlockName(superBlockOrder, superBlock, 'superOrder')">
+
+        <span ng-click = "expand=!expand">Expand</span>
+      </h1>
+      <div ng-show = "expand" class = "sub" ng-repeat = "(blockName, block) in superBlock ">
+        <h2>
+          <input type="text" ng-model ="blockName"
+          ng-change = "setAllBlockName(blockName, block, 'block')">
+          <input type="number" ng-model = "blockOrder" placeholder = "{{getBlockOrder(block)}}"
+          ng-change="setAllBlockName(blockOrder, block, 'order')">
+
+          <span ng-click = "expanded=!expanded">Expand</span>
+          <button ng-click = "reorder(block)">Reorder</button>
+          <button ng-click = "changingSuper = !changingSuper">Change Super Block</button>
+          <div ng-show = "changingSuper">
+            <input type = "text" ng-model-options = "{updateOn:'blur'}"
+            ng-model = "newSuperBlockName" ng-change = "setAllBlockName(newSuperBlockName, block, 'superBlock')"/> 
+          </div>
+        </h2>
+        <div ng-show = "expanded" class="sub" ng-repeat = "challenge in block | orderBy: 'suborder'">
+          <input type="text" ng-model ="challenge.name"  ng-change = "challenge.dirty = true">
+          <input type="number" ng-model ="challenge.superOrder" ng-change = "challenge.dirty = true">
+          <input type="number" ng-model ="challenge.order" ng-change = "challenge.dirty = true">
+          <input type="number" ng-model-options = "{updateOn:'blur'}" ng-model ="challenge.suborder" ng-change = "challenge.dirty = true">
+          <span>
+            required:
+            <input type="checkbox" ng-model ="challenge.isRequired" ng-change = "challenge.dirty = true">
+          </span>
+          <span>
+            beta:
+            <input type="checkbox" ng-model ="challenge.isBeta" ng-change = "challenge.dirty = true">
+          </span>
+          <span>
+            comingsoon:
+            <input type="checkbox" ng-model ="challenge.isComingSoon" ng-change = "challenge.dirty = true">
+          </span>
+          <button ng-click = "editing = !editing"> Edit Blocks
+          </button>
+          {{challenge._id}}
+          <div ng-show = "editing">
+            Super Block: <input type = "text" ng-model = "challenge.superBlock" ng-change ="challenge.dirty = true">
+            <br/>
+            Block: <input type = "text" ng-model = "challenge.block" ng-change ="challenge.dirty = true">
+          </div>
+        </div>
+      </div>
+    </div>
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
     <script src = "app.js"></script>
   </body>
